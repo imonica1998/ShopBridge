@@ -32,7 +32,7 @@ export function dispatchLogin(username: string, password: string) {
             return
         }
         if(!isError){
-            let response = await apiCall(apiEndPoints.DEV_LOGIN, requestMethod.POST, {
+            let response = await apiCall(apiEndPoints.LOGIN, requestMethod.POST, {
                 usr: username,
                 pwd: password,
             })
