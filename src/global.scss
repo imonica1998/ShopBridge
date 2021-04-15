@@ -1,0 +1,26 @@
+$xs: "only screen and (max-device-width : 576px)"; // extra small devices
+$sm: "only screen and (min-device-width : 576px)"; // small devices
+$md: "only screen and (min-device-width : 768px)"; // medium devices
+$lg: "only screen and (min-device-width : 992px)"; // large devices
+$xl: "only screen and (min-device-width : 1200px)"; // extra large devices
+$red: #f03f29;
+$blue: #354ea2;
+$lightGrey: #f2f2f2;
+$darkGrey: #6e6e6e;
+$boxShadowLight: 0px 3px rgba(0, 0, 0, 0.05);
+$boxShadowDark: 0 4px 4px rgba(0, 0, 0, 0.08);
+.w-100 {
+    width: 100%;
+}
+.m-0 {
+    margin: 0px;
+}
+.pl-0 {
+    padding-left: 0px;
+}
+.pr-0 {
+    padding-right: 0px;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
