@@ -1,0 +1,20 @@
+@import "../../global.scss";
+.custom-spinner-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    top: 0;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+
+    .custom-spinner {
+        width: 3rem !important;
+        height: 3rem !important;
+        border: 0.25em solid $blue !important;
+        border-right-color: transparent !important;
+        border-radius: 50%;
+        animation: 0.75s linear infinite spinner-border;
+    }
+}

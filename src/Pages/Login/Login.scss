@@ -1,0 +1,73 @@
+@import "../../global.scss";
+.login-card-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .login-card {
+        height: 400px;
+        width: 85%;
+        margin: auto;
+        border: 1px solid #eff0f1;
+        box-sizing: border-box;
+        box-shadow: $boxShadowDark;
+        border-radius: 10px;
+        .logo-img-col {
+            padding-left: 0px;
+            .logo-img {
+                width: 100px;
+            }
+        }
+    }
+    .log-in-heading {
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 28px;
+        color: $blue;
+        margin-bottom: 0px;
+    }
+    .log-in-row {
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .log-in-form {
+        width: 80%;
+        margin: auto;
+        .form-labels {
+            text-align: left;
+            width: 100%;
+        }
+        .error-text {
+            color: $red;
+            font-size: 20px;
+        }
+        .log-in-btn {
+            width: 118px;
+            height: 36px;
+            background: $red;
+            border-radius: 20px;
+            border: 1px solid $red;
+            margin-top: 25px !important;
+            font-size: 16px !important;
+            line-height: 18px !important;
+            font-weight: bold;
+            &:hover {
+                color: $red;
+                background-color: white;
+                border-color: $red;
+            }
+        }
+    }
+
+    @media #{$xs} {
+        .log-in-heading {
+            font-size: 24px;
+        }
+        .log-heading-container {
+            padding-left: 0px;
+        }
+    }
+}
