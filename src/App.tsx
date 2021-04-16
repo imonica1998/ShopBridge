@@ -9,21 +9,25 @@ import CustomSpinner from "./Components/CustomSpinner/CustomSpinner";
 class App extends React.Component {
   state = {
     loaderVisible: false,
+    topNavVisible: true,
   }
   constructor(props: any) {
     super(props)
     this.state = {
       loaderVisible: false,
+      topNavVisible: true,
     }
-
     Interceptor.interceptRequest(this);
     Interceptor.interceptResponse(this);
-
   }
+  componentDidMount() {
+    this.setState({ topNavVisible: !["/login"].includes(window.location.pathname) })
+  }
+
   render() {
     return (
       <div className="App" >
-        {!["/login"].includes(window.location.pathname) ?
+        {this.state.topNavVisible ?
           <TopNav />
           : null}
         <Routes />

@@ -9,12 +9,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './Reducer/Store';
 import 'react-toastify/dist/ReactToastify.css';
-
+export const navigationRef = React.createRef();
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter ref={navigationRef}>
         <App />
         <ToastContainer />
       </BrowserRouter>

@@ -4,9 +4,23 @@ import { withRouter } from "react-router-dom";
 import FontAwesome from 'react-fontawesome'
 import { Row, Col, Container, Card } from "react-bootstrap";
 import ItemsList from "../../Components/ItemsList/ItemsList";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { dispatchGetDashboardItems, dispatchGetInventoryItemsList } from "./dispatcher";
+import Utility from "../../Utils/Utility";
+import { toast } from "react-toastify";
 
 class Dashboard extends React.Component {
+    componentDidMount() {
+        if (Utility.getCookie("user_id") === "Guest" || Utility.getCookie("full_name") === "Guest") {
+            toast.error("Please Login before coming to Dashboard!")
+            Utility.navigateToScreen("/login", this, {});
+            return;
+        }
+        this.props.dispatchGetInventoryItemsList();
+    }
     render() {
+        console.log("dashboard-", this.props)
         return (
             <div className="dashboard-container">
                 <Container>
@@ -15,7 +29,7 @@ class Dashboard extends React.Component {
                         <Col xs={12} md={4}>
                             <Card className="widget-card">
                                 <Row className="align-items-center">
-                                    <Col xs={2} md={2}>
+                                    <Col xs={2} md={2} className="widget-icon-col">
                                         <FontAwesome
                                             className="text-yellow"
                                             name="industry"
@@ -25,7 +39,7 @@ class Dashboard extends React.Component {
                                     </Col>
                                     <Col xs={10} md={10}>
                                         <Row>
-                                            <h4 className="widget-card-title">Inventory Stock</h4>
+                                            <h4 className="widget-card-title text-yellow">Inventory Stock</h4>
                                         </Row>
                                         <Row>
                                             <Col xs={9} md={9} className="text-left">
@@ -55,17 +69,17 @@ class Dashboard extends React.Component {
                         <Col xs={12} md={4}>
                             <Card className="widget-card">
                                 <Row className="align-items-center">
-                                    <Col xs={2} md={2}>
+                                    <Col xs={2} md={2} className="widget-icon-col">
                                         <FontAwesome
                                             className="text-green"
-                                            name="edit"
+                                            name="plus-square"
                                             size="2x"
                                             style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
                                         />
                                     </Col>
                                     <Col xs={10} md={10}>
                                         <Row>
-                                            <h4 className="widget-card-title">Add/Modify Item</h4>
+                                            <h4 className="widget-card-title text-green">Add New Item</h4>
                                         </Row>
                                         <Row>
                                             <Col xs={9} md={9} className="text-left">
@@ -94,7 +108,7 @@ class Dashboard extends React.Component {
                         <Col xs={12} md={4}>
                             <Card className="widget-card">
                                 <Row className="align-items-center">
-                                    <Col xs={2} md={2}>
+                                    <Col xs={2} md={2} className="widget-icon-col">
                                         <FontAwesome
                                             className="text-red"
                                             name="trash"
@@ -104,7 +118,7 @@ class Dashboard extends React.Component {
                                     </Col>
                                     <Col xs={10} md={10}>
                                         <Row>
-                                            <h4 className="widget-card-title">Remove Item</h4>
+                                            <h4 className="widget-card-title text-red">Remove Item</h4>
                                         </Row>
                                         <Row>
                                             <Col xs={9} md={9} className="text-left">
@@ -131,4 +145,12 @@ class Dashboard extends React.Component {
     }
 }
 
-export default withRouter(Dashboard);
+const mapStateToProps = (state: any, ownProps: any) => {
+    return { login: state.login }
+}
+
+const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+    return bindActionCreators({ dispatchGetDashboardItems, dispatchGetInventoryItemsList }, dispatch)
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

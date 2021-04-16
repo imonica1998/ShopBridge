@@ -61,10 +61,9 @@ class ItemsList extends React.Component {
 
             products.push(
                 <Col lg={3} md={4} xs={12} className={outOfStock ? 'disabled pl-columns' : 'pl-columns'} key={productList[i]['item_code']}>
-                    <Card className='sellingProductsCard'>
+                    <Card className='item-card'>
                         <Row>
                             <Col xs={5} md={12} lg={12}>
-                                {percentOff > 0 && !outOfStock ? <p className="offer">{percentOff}% <span>Off</span></p> : null}
                                 <div className="product">
                                     {outOfStock ? <p className='sold-out'>Sold out</p> : null}
                                     <Image className='img-fluid' src={"https://images-na.ssl-images-amazon.com/images/I/71bufOt9zAL._SX425_.jpg"} />
@@ -82,7 +81,7 @@ class ItemsList extends React.Component {
                                 </label>
                                 <Row>
                                     <Col md={6} xs={6} className='center offset-md-0'>
-                                        <Button onClick={(e) => { e.stopPropagation(); }} disabled={outOfStock}>
+                                        <Button onClick={(e) => { e.stopPropagation(); }} disabled={outOfStock} className="edit-button">
                                             <FontAwesome
                                                 name="edit"
                                                 size="2x"
@@ -92,7 +91,7 @@ class ItemsList extends React.Component {
 
                                     </Col>
                                     <Col md={6} xs={6} className='center offset-md-0'>
-                                        <Button onClick={(e) => { e.stopPropagation(); }} disabled={outOfStock}>
+                                        <Button onClick={(e) => { e.stopPropagation(); }} disabled={outOfStock} className="delete-button">
                                             <FontAwesome
                                                 name="trash"
                                                 size="2x"

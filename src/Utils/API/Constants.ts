@@ -2,7 +2,7 @@ export const USER_KEY = ''
 
 export const apiEndPoints = {
     LOGIN: '/api/method/login',
-    GET_ITEMS_DASHBOARD: "/api/method/velocityduos.shop-bridge.api_utils.get_items_dashboard",
+    GET_INVENTORY_ITEMS_DASHBOARD: "/api/method/velocityduos.api.mobile_utils.get_items_dashboard"
 }
 
 export const requestMethod = {
