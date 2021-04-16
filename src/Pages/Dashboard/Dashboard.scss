@@ -1,0 +1,36 @@
+@import "../../global.scss";
+.dashboard-container {
+    margin-top: 90px;
+    .widget-card {
+        padding: 10px;
+        border: 1px solid $borderColor;
+        box-sizing: border-box;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        height: 100px;
+        .widget-card-title {
+            margin-left: 16px;
+        }
+    }
+    .font-bold {
+        font-weight: bold;
+    }
+    .itemlist-container {
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+    .text-red {
+        color: $red;
+    }
+    .text-blue {
+        color: $blue;
+    }
+    .text-yellow {
+        color: #f9bf00;
+    }
+    .text-green {
+        color: #13d60f;
+    }
+}
