@@ -1,17 +1,6 @@
 @import "../../global.scss";
 
 .sellingProductsList {
-    .menu-item {
-        padding: 0 15.5px 8px 15.5px;
-        margin: 5px 10px;
-        -webkit-user-select: none;
-        user-select: none;
-        cursor: pointer;
-        border: none;
-        font-size: 16px;
-        line-height: 18px;
-        color: #354ea2;
-    }
     .item-card {
         text-align: left;
         padding: 15px;
@@ -21,6 +10,24 @@
         position: relative;
         margin-top: 25px;
         max-height: 430px;
+        @media #{$md} {
+            height: 400px;
+        }
+        img {
+            height: 150px;
+            object-fit: contain;
+            @media #{$xs} {
+                height: 200px;
+            }
+        }
+        .productName {
+            font-size: 16px;
+            margin-bottom: 0px;
+            line-height: 18px;
+            @media #{$md} {
+                height: 30px;
+            }
+        }
         .sold-out {
             margin-bottom: 0;
             background: red;

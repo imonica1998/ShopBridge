@@ -137,7 +137,7 @@ class Dashboard extends React.Component {
                     </Row>
                     <div className="itemlist-container">
                         <h2 className="text-blue text-left">Items in the Inventory</h2>
-                        <ItemsList />
+                        <ItemsList items={this.props.dashboard.inventoryItems} />
                     </div>
                 </Container>
             </div>
