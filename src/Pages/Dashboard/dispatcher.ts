@@ -9,6 +9,7 @@ export function dispatchGetInventoryItemsList() {
         let response = await apiCall(apiEndPoints.GET_INVENTORY_ITEMS_DASHBOARD, requestMethod.GET)
         if (response.success) {
             console.log("response---", response)
+            dispatch(actionSetItemsList(response?.data?.message))
         }
         else {
             dispatch(actionErrorGetItemsList(!response.success))

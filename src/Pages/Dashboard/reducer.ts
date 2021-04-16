@@ -26,4 +26,4 @@ function dashboardReducer(state = devLoginInitialState, action: any) {
     }
 }
 
-export default devLoginReducer;
+export default dashboardReducer;

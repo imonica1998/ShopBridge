@@ -2,8 +2,9 @@ import { actionEmailErrorLogin, actionErrorLogin, actionLogin, actionPasswordErr
 import { apiCall } from "../../Utils/API/ApiCall";
 import { apiEndPoints, requestMethod } from "../../Utils/API/Constants";
 import { toast } from 'react-toastify';
+import Utility from "../../Utils/Utility"
 
-export function dispatchLogin(username: string, password: string) {
+export function dispatchLogin(username: string, password: string, self: any) {
     return async (dispatch: any) => {
         dispatch(actionLogin);
         var reg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
@@ -31,18 +32,19 @@ export function dispatchLogin(username: string, password: string) {
             ))
             return
         }
-        if(!isError){
+        if (!isError) {
             let response = await apiCall(apiEndPoints.LOGIN, requestMethod.POST, {
                 usr: username,
                 pwd: password,
             })
             if (response.success) {
-                toast.success("Login Successful!")
+                toast.success("Login Successful!");
+                Utility.navigateToScreen("/dashboard", self, {})
             }
-            else{
+            else {
                 dispatch(actionErrorLogin(!response.success))
             }
-            
+
         }
 
     }

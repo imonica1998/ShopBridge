@@ -57,12 +57,12 @@ class Login extends React.Component {
                                 onChange={(e) => this.handleInput("password", e.target.value)}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
-                                        this.props.dispatchLogin(this.state.username, this.state.password)
+                                        this.props.dispatchLogin(this.state.username, this.state.password,this)
                                     }
                                 }} />
                             {this.props?.devLogin?.passwordError ? <Form.Text className='error-text' id="passwordHelpBlock">{this.props?.devLogin?.passwordError}</Form.Text> : null}
                         </Form.Group>
-                        <Button className='log-in-btn' onClick={() => this.props.dispatchLogin(this.state.username, this.state.password)}>Login</Button>
+                        <Button className='log-in-btn' onClick={() => this.props.dispatchLogin(this.state.username, this.state.password,this)}>Login</Button>
                     </Form>
                 </Card>
             </div>

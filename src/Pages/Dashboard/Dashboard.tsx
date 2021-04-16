@@ -146,7 +146,7 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = (state: any, ownProps: any) => {
-    return { login: state.login }
+    return { dashboard: state.dashboard }
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => {
