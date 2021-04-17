@@ -3,7 +3,15 @@ import { Navbar, Row, Col, Image } from "react-bootstrap";
 import Menu from "../../assets/menu.svg";
 import User from "../../assets/user.svg";
 import "./TopNav.scss";
+import { navigationRef } from "../../index";
 class TopNav extends React.Component {
+    constructor(props: any) {
+        super(props);
+    }
+    navigateToProfile() {
+        console.log("this.props--", this.props)
+        navigationRef.current.history.push("/profile", {})
+    }
     render() {
         return (
             <Navbar className={"top-navbar pl-0 pr-0"}>
@@ -15,7 +23,7 @@ class TopNav extends React.Component {
                         Welcome Admin,
                     </Col>
                     <Col xs={2} md={2} className="justify-content-end d-flex align-items-end">
-                        <div className="cursor-pointer user-img-container">
+                        <div className="cursor-pointer user-img-container" onClick={() => this.navigateToProfile()}>
                             <Image src={User} />
                         </div>
                     </Col>
