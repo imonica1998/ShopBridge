@@ -53,7 +53,7 @@ class Dashboard extends React.Component {
                                     </Col>
                                             <Col xs={3} md={3}>
                                                 <div>
-                                                    200
+                                                {this.props.dashboard.dashboardData?.totalItems}
                                         </div>
                                             </Col>
                                         </Row>
@@ -63,7 +63,7 @@ class Dashboard extends React.Component {
                                     </Col>
                                             <Col xs={3} md={3}>
                                                 <div>
-                                                    190
+                                                {this.props.dashboard.dashboardData?.availableItems}
                                         </div>
                                             </Col>
                                         </Row>
@@ -93,7 +93,7 @@ class Dashboard extends React.Component {
                                             </Col>
                                             <Col xs={3} md={3}>
                                                 <div>
-                                                    3
+                                                {this.props.dashboard.dashboardData?.newItems}
                                                 </div>
                                             </Col>
                                         </Row>
@@ -103,7 +103,7 @@ class Dashboard extends React.Component {
                                             </Col>
                                             <Col xs={3} md={3}>
                                                 <div>
-                                                    3
+                                                {this.props.dashboard.dashboardData?.modifiedItems}
                                                 </div>
                                             </Col>
                                         </Row>
@@ -132,7 +132,7 @@ class Dashboard extends React.Component {
                                             </Col>
                                             <Col xs={3} md={3}>
                                                 <div>
-                                                    3
+                                                {this.props.dashboard.dashboardData?.deletedItems}
                                                 </div>
                                             </Col>
                                         </Row>

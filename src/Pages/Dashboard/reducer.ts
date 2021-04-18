@@ -13,12 +13,8 @@ const devLoginInitialState = {
 
 function dashboardReducer(state = devLoginInitialState, action: any) {
     switch (action.type) {
-        case GET_DASHBOARD_ITEMS:
-            return { ...state, dashbordData: {}, errorGetDashboardItems: false }
         case SET_DASHBOARD_ITEMS:
-            return { ...state, dashbordData: action.items, errorGetDashboardItems: false }
-        case ERROR_GET_DASHBOARD_ITEMS:
-            return { ...state, dashbordData: {}, errorGetDashboardItems: true }
+            return { ...state, dashboardData: action.items, errorGetDashboardItems: false }
         case GET_ITEMS_LIST:
             return { ...state, inventoryItems: [], errorGetItemsList: action.error }
         case SET_ITEMS_LIST:
