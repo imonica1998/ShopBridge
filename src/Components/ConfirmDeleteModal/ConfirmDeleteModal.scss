@@ -1,0 +1,66 @@
+@import "../../global.scss";
+.confirm-delete-modal .modal-content {
+    display: flex;
+    flex-direction: column;
+    .success-modal-title {
+        font-weight: bold;
+        font-size: 24px;
+        color: $blue;
+        text-align: center;
+    }
+    .action-btn-row {
+        margin-top: 25px;
+        margin-bottom: 25px;
+        .action-btn-col {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .yes-btn,
+            .no-btn {
+                width: 118px;
+                height: 36px;
+                font-weight: 600;
+                border-radius: 20px;
+                outline: none;
+                @media #{$md} {
+                    width: 150px;
+                    height: 36px;
+                }
+            }
+            .no-btn {
+                background: $faintGrey;
+                color: $lightBlack;
+                border: 1px solid $faintGrey;
+                &:hover {
+                    border-color: $lightBlack;
+                    color: $lightBlack;
+                    background-color: white;
+                }
+            }
+            .yes-btn {
+                background: $red;
+                color: white;
+                border: 1px solid $red;
+                &:hover {
+                    border-color: $red;
+                    color: $red;
+                    background-color: white;
+                }
+            }
+        }
+    }
+    .close-btn-container {
+        display: flex;
+        justify-content: flex-end;
+        .close-btn {
+            background: white;
+            color: $darkGrey;
+            border-color: white;
+            outline: none;
+            &:hover {
+                background-color: white;
+                border-color: white;
+            }
+        }
+    }
+}

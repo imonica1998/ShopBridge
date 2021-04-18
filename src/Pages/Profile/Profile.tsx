@@ -9,7 +9,7 @@ import { dispatchGetProfile, dispatchUpdateProfile } from './dispatcher';
 import { actionProfileUpdateSuccess } from "./action";
 import { toast } from 'react-toastify';
 import Utility from "../../Utils/Utility";
-import ProfileSuccessModal from "../../Components/ProfileSucessModal/ProfileSucessModal";
+import SuccessModal from "../../Components/SuccessModal/SuccessModal";
 
 class Profile extends React.Component {
     constructor(props: any) {
@@ -284,7 +284,7 @@ class Profile extends React.Component {
                         </Card>
                     </Col>
                 </Row>
-                {this.state.showSuccessModal ? <ProfileSuccessModal visible={this.state.showSuccessModal} onHide={() => this.hideSuccessModal()} /> : null}
+                {this.state.showSuccessModal ? <SuccessModal modalTitle="Profile Updated Successfully!" visible={this.state.showSuccessModal} onHide={() => this.hideSuccessModal()} /> : null}
 
             </div>
         )

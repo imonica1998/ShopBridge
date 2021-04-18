@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Image, Button } from "react-bootstrap";
 import Success from "../../assets/success.svg";
 import FontAwesome from 'react-fontawesome';
-import "./ProfileSuccessModal.scss";
+import "./SuccessModal.scss";
 
 
 class ProfileSuccessModal extends React.Component {
@@ -13,7 +13,7 @@ class ProfileSuccessModal extends React.Component {
         return (
             <Modal
                 animation={false}
-                className="profile-success-modal"
+                className="success-modal"
                 show={this.props.visible}
                 onExit={() => this.props.onHide()}
                 onHide={() => this.props.onHide()}
@@ -27,7 +27,7 @@ class ProfileSuccessModal extends React.Component {
                                 name="times" />
                         </Button>
                     </div>
-                    <h4 className="success-modal-title">Profile Updated Successfully!</h4>
+                    <h4 className="success-modal-title">{this.props.modalTitle}</h4>
                     <div className="success-img-container">
                         <Image src={Success} alt="success-profile" className="success-img" />
                     </div>

@@ -11,6 +11,9 @@ import Utility from "../../Utils/Utility";
 import { toast } from "react-toastify";
 
 class Dashboard extends React.Component {
+    constructor(props: any) {
+        super(props);
+    }
     componentDidMount() {
         if (Utility.getCookie("user_id") === "Guest" || Utility.getCookie("full_name") === "Guest") {
             toast.error("Please Login before coming to Dashboard!")
@@ -139,6 +142,7 @@ class Dashboard extends React.Component {
                         <h2 className="text-blue text-left">Items in the Inventory</h2>
                         <ItemsList items={this.props.dashboard.inventoryItems} />
                     </div>
+                   
                 </Container>
             </div>
         )

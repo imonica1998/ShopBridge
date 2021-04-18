@@ -1,15 +1,64 @@
 import React from 'react';
 import './ItemsList.scss';
 import FontAwesome from 'react-fontawesome'
-import { Row, Col, Container, Card, Image, Button } from "react-bootstrap";
+import { Row, Col, Container, Card, Image, Button, OverlayTrigger, Popover } from "react-bootstrap";
+import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
+import SuccessModal from "../SuccessModal/SuccessModal";
+import { dispatchDeleteItem } from "../../Pages/Dashboard/dispatcher";
+import { actionDeleteItemSuccess } from "../../Pages/Dashboard/action";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import Utility from "../../Utils/Utility";
+import { navigationRef } from "../../index";
 
 class ItemsList extends React.Component {
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            showDeleteModal: false,
+            actionItemName: "",
+            showDeleteSuccessModal: false,
+        }
+        this.confirmDelete = this.confirmDelete.bind(this);
+        this.toogleModal = this.toogleModal.bind(this);
+        this.hideSuccessModal = this.hideSuccessModal.bind(this);
+    }
+
+    toogleModal(display: boolean, deleteItemName: string) {
+        console.log("delete-", deleteItemName)
+        this.setState({ showDeleteModal: display, actionItemName: deleteItemName })
+    }
+    async confirmDelete() {
+        await this.props.dispatchDeleteItem(this.state.actionItemName);
+        this.setState({ showDeleteSuccessModal: this.props.dashboard.deleteItemSuccess })
+    }
+    hideSuccessModal() {
+        this.setState({ showDeleteSuccessModal: false })
+        this.toogleModal(false, "")
+        this.props.actionDeleteItemSuccess(false)
+        window.location.reload();
+    }
+    navigateToEditItem(itemName: string, item: any) {
+        console.log("item--", item)
+        this.setState({ actionItemName: itemName }, function () {
+            navigationRef.current.history.push(`/edit-item?item_name=${itemName}`, { item: item })
+        }
+        )
+    }
+    createPopover(itemDescription: string) {
+        return (
+            <Popover id="popover-basic" >
+                <Popover.Content>
+                    {itemDescription}
+                </Popover.Content>
+            </Popover>)
+    }
     render() {
         console.log("props--", this.props)
         let products = [];
         for (const i in this.props.items) {
             let outOfStock = false
-            if (this.props.items[i]['available_qty'] <= 0) {
+            if (this.props.items[i]['available_qty'] <= 0 || this.props.items[i]['available_qty'] === "") {
                 outOfStock = true
             }
             let discount = this.props.items[i]['mrp'] - this.props.items[i]["customer_price"];
@@ -26,6 +75,9 @@ class ItemsList extends React.Component {
                             <Col xs={7} md={12} lg={12}>
                                 <p className='brand'>{this.props.items[i]['brand'].toUpperCase()}</p>
                                 <h5 className='productName'> {this.props.items[i]['item_name'].split('/')[0]}</h5>
+                                <OverlayTrigger trigger="click" placement="bottom" overlay={this.createPopover(this.props.items[i]['description'])}>
+                                    <div className="cursor-pointer">Description </div>
+                                </OverlayTrigger>
                                 <label className='mrp inline'>
                                     {this.props.items[i]['mrp'] > 0 ? <div>MRP ₹ <strike>{this.props.items[i]['mrp']}</strike></div> : null}
                                     <label>Customer Price<span className='blue'> ₹ {this.props.items[i]["customer_price"]}</span></label>
@@ -37,7 +89,7 @@ class ItemsList extends React.Component {
                                 </label>
                                 <Row>
                                     <Col md={6} xs={6} className='center offset-md-0'>
-                                        <Button onClick={(e) => { e.stopPropagation(); }} disabled={outOfStock} className="edit-button">
+                                        <Button onClick={(e) => this.navigateToEditItem(this.props.items[i]['name'], this.props.items[i])} disabled={outOfStock} className="edit-button">
                                             <FontAwesome
                                                 name="edit"
                                                 size="2x"
@@ -47,7 +99,7 @@ class ItemsList extends React.Component {
 
                                     </Col>
                                     <Col md={6} xs={6} className='center offset-md-0'>
-                                        <Button onClick={(e) => { e.stopPropagation(); }} disabled={outOfStock} className="delete-button">
+                                        <Button onClick={(e) => this.toogleModal(true, this.props.items[i]['name'])} disabled={outOfStock} className="delete-button">
                                             <FontAwesome
                                                 name="trash"
                                                 size="2x"
@@ -69,8 +121,19 @@ class ItemsList extends React.Component {
                 <Row className={""}>
                     {products}
                 </Row>
+                <ConfirmDeleteModal visible={this.state.showDeleteModal} onHide={() => this.toogleModal(false, "")} onconfirmDelete={() => this.confirmDelete()} />
+                {this.state.showDeleteSuccessModal ? <SuccessModal modalTitle="Item Deleted Successfully!" visible={this.state.showDeleteSuccessModal} onHide={() => this.hideSuccessModal()} /> : null}
             </section>
         )
     }
 }
-export default ItemsList;
+
+const mapStateToProps = (state: any, ownProps: any) => {
+    return { dashboard: state.dashboard }
+}
+
+const mapDispatchToProps = (dispatch: any, ownProps: any) => {
+    return bindActionCreators({ dispatchDeleteItem, actionDeleteItemSuccess }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemsList);
