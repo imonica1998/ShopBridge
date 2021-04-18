@@ -5,10 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import "./SuccessModal.scss";
 
 
-class ProfileSuccessModal extends React.Component {
-    constructor(props: any) {
-        super(props);
-    }
+class SuccessModal extends React.Component {
     render() {
         return (
             <Modal
@@ -36,4 +33,4 @@ class ProfileSuccessModal extends React.Component {
         )
     }
 }
-export default ProfileSuccessModal;
+export default SuccessModal;

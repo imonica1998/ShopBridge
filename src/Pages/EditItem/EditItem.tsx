@@ -1,13 +1,15 @@
 import React from 'react';
 import './EditItem.scss';
 import { withRouter } from "react-router-dom";
-import { Row, Col, Card, Image, Form, Button, FormControl } from "react-bootstrap";
+import { Row, Col, Card, Form, Button, FormControl } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { dispatchCreateOrModifyItem } from "../Dashboard/dispatcher";
 import { actionCreateOrModifyItemSuccess } from "../Dashboard/action";
 import SuccessModal from "../../Components/SuccessModal/SuccessModal";
 import { navigationRef } from "../../index";
+import Utility from "../../Utils/Utility";
+import { toast } from "react-toastify";
 
 class EditItem extends React.Component {
     constructor(props: any) {
@@ -31,6 +33,11 @@ class EditItem extends React.Component {
     }
     componentDidMount() {
         console.log("props-", this.props)
+        if (Utility.getCookie("user_id") === "Guest" || Utility.getCookie("full_name") === "Guest") {
+            toast.error("Please Login before coming to Dashboard!")
+            Utility.navigateToScreen("/login", this, {});
+            return;
+        }
         if (this.props.location.state?.editItem) {
             this.setState({
                 itemName: this.props.location.state?.item?.item_name,
@@ -75,7 +82,7 @@ class EditItem extends React.Component {
         }
     }
     clearForm() {
-        this.state = {
+        this.setState({
             itemName: "",
             description: "",
             brand: "",
@@ -90,7 +97,7 @@ class EditItem extends React.Component {
             itemMrpError: false,
             itemImageError: false,
             showSuccessModal: false,
-        }
+        })
     }
     async submitForm() {
         if (!this.state.itemName) {

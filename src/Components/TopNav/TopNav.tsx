@@ -6,9 +6,6 @@ import "./TopNav.scss";
 import { navigationRef } from "../../index";
 import Utility from "../../Utils/Utility";
 class TopNav extends React.Component {
-    constructor(props: any) {
-        super(props);
-    }
     navigateToHome() {
         navigationRef.current.history.push("/dashboard", {})
     }

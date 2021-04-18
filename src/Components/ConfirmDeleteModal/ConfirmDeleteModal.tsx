@@ -1,14 +1,10 @@
 import React from 'react';
-import { Modal, Image, Button, Row, Col } from "react-bootstrap";
-import Success from "../../assets/success.svg";
+import { Modal ,Button, Row, Col } from "react-bootstrap";
 import FontAwesome from 'react-fontawesome';
 import "./ConfirmDeleteModal.scss";
 
 
 class ConfirmDeleteModal extends React.Component {
-    constructor(props: any) {
-        super(props);
-    }
     render() {
         return (
             <Modal

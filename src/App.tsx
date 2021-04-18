@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import TopNav from "./Components/TopNav/TopNav";

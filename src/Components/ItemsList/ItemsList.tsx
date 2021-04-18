@@ -1,14 +1,13 @@
 import React from 'react';
 import './ItemsList.scss';
 import FontAwesome from 'react-fontawesome'
-import { Row, Col, Container, Card, Image, Button, OverlayTrigger, Popover } from "react-bootstrap";
+import { Row, Col, Card, Image, Button, OverlayTrigger, Popover } from "react-bootstrap";
 import ConfirmDeleteModal from "../ConfirmDeleteModal/ConfirmDeleteModal";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import { dispatchDeleteItem } from "../../Pages/Dashboard/dispatcher";
 import { actionDeleteItemSuccess } from "../../Pages/Dashboard/action";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Utility from "../../Utils/Utility";
 import { navigationRef } from "../../index";
 
 class ItemsList extends React.Component {
@@ -54,7 +53,6 @@ class ItemsList extends React.Component {
             </Popover>)
     }
     render() {
-        console.log("props--", this.props)
         let products = [];
         for (const i in this.props.items) {
             let outOfStock = false

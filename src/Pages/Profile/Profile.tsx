@@ -2,7 +2,7 @@ import React from 'react';
 import './Profile.scss';
 import FontAwesome from 'react-fontawesome'
 import { withRouter } from "react-router-dom";
-import { Row, Col, Container, Card, Image, Button, Form, FormControl, InputGroup } from "react-bootstrap";
+import { Row, Col, Card, Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { dispatchGetProfile, dispatchUpdateProfile } from './dispatcher';
