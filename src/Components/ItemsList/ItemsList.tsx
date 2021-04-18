@@ -63,7 +63,7 @@ class ItemsList extends React.Component {
             }
             let discount = this.props.items[i]['mrp'] - this.props.items[i]["customer_price"];
             products.push(
-                <Col lg={3} md={4} xs={12} className={outOfStock ? 'disabled pl-columns' : 'pl-columns'} key={this.props.items[i]['name']}>
+                <Col lg={3} md={4} xs={12} key={this.props.items[i]['name']}>
                     <Card className='item-card'>
                         <Row>
                             <Col xs={5} md={12} lg={12}>
@@ -76,15 +76,15 @@ class ItemsList extends React.Component {
                                 <p className='brand'>{this.props.items[i]['brand'].toUpperCase()}</p>
                                 <h5 className='productName'> {this.props.items[i]['item_name'].split('/')[0]}</h5>
                                 <OverlayTrigger trigger="click" placement="bottom" overlay={this.createPopover(this.props.items[i]['description'])}>
-                                    <div className="cursor-pointer">Description </div>
+                                    <div className="cursor-pointer description">Description </div>
                                 </OverlayTrigger>
-                                <label className='mrp inline'>
-                                    {this.props.items[i]['mrp'] > 0 ? <div>MRP ₹ <strike>{this.props.items[i]['mrp']}</strike></div> : null}
-                                    <label>Customer Price<span className='blue'> ₹ {this.props.items[i]["customer_price"]}</span></label>
+                                <label>
+                                    {this.props.items[i]['mrp'] > 0 ? <div>MRP <span className='mrp'>₹ <strike>{this.props.items[i]['mrp']}</strike></span></div> : null}
+                                    <label>Customer Price<span className='customer-price'> ₹ {this.props.items[i]["customer_price"]}</span></label>
                                 </label>
-                                <label className='rsSave inline'>
+                                <label>
                                     {discount > 0 ?
-                                        <div>Total Off <span className='green'> ₹ {discount.toFixed(2)}</span></div>
+                                        <div>Total Off <span className='total-off'> ₹ {discount.toFixed(2)}</span></div>
                                         : null}
                                 </label>
                                 <Row>
@@ -93,7 +93,6 @@ class ItemsList extends React.Component {
                                             <FontAwesome
                                                 name="edit"
                                                 size="2x"
-                                                style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
                                             />
                                         </Button>
 
@@ -103,7 +102,6 @@ class ItemsList extends React.Component {
                                             <FontAwesome
                                                 name="trash"
                                                 size="2x"
-                                                style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)' }}
                                             />
                                         </Button>
 
@@ -117,7 +115,7 @@ class ItemsList extends React.Component {
         }
         return (
 
-            <section className='sellingProductsList'>
+            <section className='itemListSection'>
                 <Row className={""}>
                     {products}
                 </Row>

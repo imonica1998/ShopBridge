@@ -1,6 +1,6 @@
 @import "../../global.scss";
 
-.sellingProductsList {
+.itemListSection {
     .item-card {
         text-align: left;
         padding: 15px;
@@ -20,13 +20,42 @@
                 height: 200px;
             }
         }
+        .brand {
+            color: #c1c1c1;
+            line-height: 10px;
+            @media #{$md} {
+                margin-top: 10px;
+            }
+        }
         .productName {
             font-size: 16px;
             margin-bottom: 0px;
             line-height: 18px;
+            color: $lightBlack;
+            font-weight: 700;
             @media #{$md} {
                 height: 30px;
             }
+        }
+        .total-off {
+            color: #13d60f;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        .mrp {
+            color: $lightBlack;
+            font-weight: 600;
+        }
+        .customer-price {
+            color: $blue;
+            font-weight: 700;
+        }
+        .description {
+            font-size: 13px;
+            line-height: 13px;
+            color: $blue;
+            text-decoration: underline;
+            margin-bottom: 5px;
         }
         .sold-out {
             margin-bottom: 0;
