@@ -11,12 +11,14 @@ import Utility from "../../Utils/Utility";
 import { toast } from "react-toastify";
 
 class Dashboard extends React.Component {
-    componentDidMount() {
+    componentWillMount() {
         if (Utility.getCookie("user_id") === "Guest" || Utility.getCookie("full_name") === "Guest") {
             toast.error("Please Login before coming to Dashboard!")
             Utility.navigateToScreen("/login", this, {});
             return;
         }
+    }
+    componentDidMount() {
         this.props.dispatchGetInventoryItemsList();
     }
     navigateToEditScreen() {
@@ -50,8 +52,8 @@ class Dashboard extends React.Component {
                                     </Col>
                                             <Col xs={3} md={3}>
                                                 <div className="items-count">
-                                                {this.props.dashboard.dashboardData?.totalItems}
-                                        </div>
+                                                    {this.props.dashboard.dashboardData?.totalItems}
+                                                </div>
                                             </Col>
                                         </Row>
                                         <Row>
@@ -60,8 +62,8 @@ class Dashboard extends React.Component {
                                     </Col>
                                             <Col xs={3} md={3}>
                                                 <div className="items-count">
-                                                {this.props.dashboard.dashboardData?.availableItems}
-                                        </div>
+                                                    {this.props.dashboard.dashboardData?.availableItems}
+                                                </div>
                                             </Col>
                                         </Row>
 
@@ -72,7 +74,7 @@ class Dashboard extends React.Component {
                         <Col xs={12} md={4}>
                             <Card className="widget-card">
                                 <Row className="align-items-center">
-                                    <Col xs={2} md={2} className="widget-icon-col cursor-pointer" onClick={()=>this.navigateToEditScreen()}>
+                                    <Col xs={2} md={2} className="widget-icon-col cursor-pointer" onClick={() => this.navigateToEditScreen()}>
                                         <FontAwesome
                                             className="text-green"
                                             name="plus-square"
@@ -90,7 +92,7 @@ class Dashboard extends React.Component {
                                             </Col>
                                             <Col xs={3} md={3}>
                                                 <div className="items-count">
-                                                {this.props.dashboard.dashboardData?.newItems}
+                                                    {this.props.dashboard.dashboardData?.newItems}
                                                 </div>
                                             </Col>
                                         </Row>
@@ -100,7 +102,7 @@ class Dashboard extends React.Component {
                                             </Col>
                                             <Col xs={3} md={3}>
                                                 <div className="items-count">
-                                                {this.props.dashboard.dashboardData?.modifiedItems}
+                                                    {this.props.dashboard.dashboardData?.modifiedItems}
                                                 </div>
                                             </Col>
                                         </Row>
@@ -129,7 +131,7 @@ class Dashboard extends React.Component {
                                             </Col>
                                             <Col xs={3} md={3}>
                                                 <div className="items-count">
-                                                {this.props.dashboard.dashboardData?.deletedItems}
+                                                    {this.props.dashboard.dashboardData?.deletedItems}
                                                 </div>
                                             </Col>
                                         </Row>

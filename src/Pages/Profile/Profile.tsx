@@ -41,13 +41,14 @@ class Profile extends React.Component {
             mobileNumber: this.props.profileData.profile?.mobile_no ? this.props.profileData.profile?.mobile_no : "",
         })
     }
-    async componentDidMount() {
-        console.log("inside did mount profilee")
+    componentWillMount() {
         if (Utility.getCookie("user_id") === "Guest" || Utility.getCookie("full_name") === "Guest") {
             toast.error("Please Login before coming to Dashboard!")
             Utility.navigateToScreen("/login", this, {});
             return;
         }
+    }
+    async componentDidMount() {
         this.setProfileData();
     }
     handleChange(field: any, value: any) {
@@ -79,7 +80,7 @@ class Profile extends React.Component {
     clearForm() {
         this.setState({
             firstName: "",
-            LastName: "",
+            lastName: "",
             gender: "",
             mobileNumber: "",
             editPassword: false,

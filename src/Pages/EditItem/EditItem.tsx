@@ -31,13 +31,14 @@ class EditItem extends React.Component {
             showSuccessModal: false,
         }
     }
-    componentDidMount() {
-        console.log("props-", this.props)
+    componentWillMount() {
         if (Utility.getCookie("user_id") === "Guest" || Utility.getCookie("full_name") === "Guest") {
             toast.error("Please Login before coming to Dashboard!")
             Utility.navigateToScreen("/login", this, {});
             return;
         }
+    }
+    componentDidMount() {
         if (this.props.location.state?.editItem) {
             this.setState({
                 itemName: this.props.location.state?.item?.item_name,
