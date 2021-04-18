@@ -6,6 +6,10 @@ import { Row, Col, Container, Card, Image, Button, Form, FormControl, InputGroup
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { dispatchGetProfile, dispatchUpdateProfile } from './dispatcher';
+import { actionProfileUpdateSuccess } from "./action";
+import { toast } from 'react-toastify';
+import Utility from "../../Utils/Utility";
+import ProfileSuccessModal from "../../Components/ProfileSucessModal/ProfileSucessModal";
 
 class Profile extends React.Component {
     constructor(props: any) {
@@ -17,11 +21,18 @@ class Profile extends React.Component {
             mobileNumber: "",
             editPassword: false,
             password: "",
-            confirmPassword: ""
+            confirmPassword: "",
+            firstNameError: false,
+            genderError: false,
+            mobileNumberError: false,
+            passwordsNotMatchingError: false,
+            showPassword: false,
+            showSuccessModal: false,
         }
+        this.hideSuccessModal = this.hideSuccessModal.bind(this);
 
     }
-    async componentDidMount() {
+    async setProfileData() {
         await this.props.dispatchGetProfile()
         this.setState({
             firstName: this.props.profileData.profile?.first_name ? this.props.profileData.profile?.first_name : "",
@@ -30,8 +41,40 @@ class Profile extends React.Component {
             mobileNumber: this.props.profileData.profile?.mobile_no ? this.props.profileData.profile?.mobile_no : "",
         })
     }
+    async componentDidMount() {
+        console.log("inside did mount profilee")
+        if (Utility.getCookie("user_id") === "Guest" || Utility.getCookie("full_name") === "Guest") {
+            toast.error("Please Login before coming to Dashboard!")
+            Utility.navigateToScreen("/login", this, {});
+            return;
+        }
+        this.setProfileData();
+    }
     handleChange(field: any, value: any) {
+        console.log("value", value)
         this.setState({ [field]: value })
+        switch (field) {
+            case "firstName":
+                !value ?
+                    this.setState({ firstNameError: true })
+                    : this.setState({ firstNameError: false })
+                break;
+            case "gender":
+                value === "Select Gender" ?
+                    this.setState({ genderError: true })
+                    : this.setState({ genderError: false })
+                break;
+            case "mobileNumber":
+                !value ?
+                    this.setState({ mobileNumberError: true })
+                    : this.setState({ mobileNumberError: false })
+                break;
+            case "editPassword":
+                if (!value) {
+                    this.setState({ passwordsNotMatchingError: false })
+                }
+                break;
+        }
     }
     clearForm() {
         this.setState({
@@ -41,15 +84,68 @@ class Profile extends React.Component {
             mobileNumber: "",
             editPassword: false,
             password: "",
-            confirmPassword: ""
-        });
+            confirmPassword: "",
+            firstNameError: false,
+            genderError: false,
+            mobileNumberError: false,
+            passwordsNotMatchingError: false,
+            showPassword: false,
+            showSucessModal: false,
+        })
+    }
+    showConfirmPassword() {
+        this.setState({ showPassword: !this.state.showPassword })
+    }
+    async submitForm() {
+        if (!this.state.firstName) {
+            this.setState({ firstNameError: true })
+            return
+        }
+        if (!this.state.gender) {
+            this.setState({ genderError: true })
+            return
+        }
+        if (!this.state.mobileNumber) {
+            this.setState({ mobileNumberError: true })
+            return
+        }
+        if (this.state.mobileNumber.length !== 10) {
+            toast.error("Please Enter 10 digit mobile number!")
+            return
+        }
+        if (this.state.editPassword && this.state.password !== this.state.confirmPassword) {
+            this.setState({ passwordsNotMatchingError: true })
+            return
+        }
+        if (!this.state.editPassword) {
+            await this.props.dispatchUpdateProfile({
+                "first_name": this.state.firstName,
+                "last_name": this.state.lastName,
+                "gender": this.state.gender,
+                "mobile_no": this.state.mobileNumber,
+            })
+        } else {
+            await this.props.dispatchUpdateProfile({
+                "first_name": this.state.firstName,
+                "last_name": this.state.lastName,
+                "gender": this.state.gender,
+                "mobile_no": this.state.mobileNumber,
+                "password": this.state.confirmPassword
+            })
+        }
+        this.setProfileData();
+        this.setState({ showSuccessModal: this.props.profileData?.updateSuccess })
+
     }
 
-    submitForm() {
-
+    hideSuccessModal() {
+        this.setState({ showSuccessModal: false })
+        this.props.actionProfileUpdateSuccess(false)
     }
+
     render() {
         console.log("props--", this.props)
+        // console.log("state--", this.state)
         return (
             <div className="profile-container">
                 <div className='heading'>My Profile</div>
@@ -72,8 +168,7 @@ class Profile extends React.Component {
                                         <div className='fullname-header'>Full Name</div>
                                     </Row>
                                     <Row style={{ margin: 0 }}>
-                                        <div className='name'>{this.state.firstName}</div>
-                                        <div className='name'>{this.state.lastName}</div>
+                                        <div className='name'>{this.props.profileData.profile?.full_name}</div>
                                     </Row>
                                 </Col>
                             </Row>
@@ -91,7 +186,7 @@ class Profile extends React.Component {
                                     value={this.state.firstName}
                                     onChange={(e: any) => this.handleChange('firstName', e.target.value)}
                                 />
-                                {this.state.firstName ? <div className='error'>FirstName Missing</div> : null}
+                                {this.state.firstNameError ? <div className='error'>Please Enter First name!</div> : null}
                                 <FormControl
                                     aria-label="last_name"
                                     className='updateprofile-input'
@@ -103,16 +198,14 @@ class Profile extends React.Component {
                                 />
 
                                 <div className="mb-1 gender-container">
-                                    <label className='gender-label'>Gender</label>
-                                    <Form.Check inline label="Female" type={"radio"} id={'female'} />
-                                    <Form.Check inline label="Male" type={'radio'} id={'male'} />
-                                    <Form.Check
-                                        inline
-                                        label="Other"
-                                        type={'radio'}
-                                        id={'other'}
-                                    />
+                                    <Form.Control as="select" value={this.state.gender} onChange={(e: any) => this.handleChange('gender', e.target.value)}>
+                                        <option>Select Gender</option>
+                                        <option>Female</option>
+                                        <option>Male</option>
+                                        <option>Other</option>
+                                    </Form.Control>
                                 </div>
+                                {this.state.genderError ? <div className='error'>Choose your gender!</div> : null}
                                 <FormControl
                                     aria-label="mobile-number"
                                     className='updateprofile-input'
@@ -139,38 +232,46 @@ class Profile extends React.Component {
                                     }}
 
                                 />
+                                {this.state.mobileNumberError ? <div className='error'>Please Enter Mobile Number!</div> : null}
 
                                 <Form.Group controlId="formBasicCheckbox" className='editPassword-checkbox'>
-                                    <Form.Check type="checkbox" label="Yes I want to edit Password" />
+                                    <Form.Check type="checkbox" label="Yes I want to edit Password"
+                                        value={this.state.editPassword}
+                                        onChange={(e: any) => this.handleChange('editPassword', !this.state.editPassword)} />
                                 </Form.Group>
-                                <FormControl
-                                    aria-label="password"
-                                    className='updateprofile-input'
-                                    type='password'
-                                    placeholder='Password'
-                                    required
-                                    value={this.state.password}
-                                    onChange={(e: any) => this.handleChange('password', e.target.value)}
-                                />
-                                <InputGroup className="confirm-password-inputgroup">
+                                {this.state.editPassword ?
                                     <FormControl
-                                        aria-label="confirm_password"
+                                        aria-label="password"
                                         className='updateprofile-input'
                                         type='password'
-                                        placeholder='Confirm Password'
+                                        placeholder='Password'
                                         required
-                                        value={this.state.confirmPassword}
-                                        onChange={(e: any) => this.handleChange('confirmPassword', e.target.value)}
+                                        value={this.state.password}
+                                        onChange={(e: any) => this.handleChange('password', e.target.value)}
                                     />
-                                    <InputGroup.Append>
-                                        <InputGroup.Text className="password-visiblity">
-                                            <FontAwesome
-                                                name="eye"
+                                    : null}
+                                {this.state.editPassword ?
+                                    <InputGroup className="confirm-password-inputgroup">
+                                        <FormControl
+                                            aria-label="confirm_password"
+                                            className='updateprofile-input'
+                                            type={this.state.showPassword ? 'text' : 'password'}
+                                            placeholder='Confirm Password'
+                                            required
+                                            value={this.state.confirmPassword}
+                                            onChange={(e: any) => this.handleChange('confirmPassword', e.target.value)}
+                                        />
+                                        <InputGroup.Append>
+                                            <InputGroup.Text className="password-visiblity" onClick={() => this.showConfirmPassword()}>
+                                                <FontAwesome
+                                                    name={this.state.showPassword ? "eye-slash" : "eye"}
 
-                                            />
-                                        </InputGroup.Text>
-                                    </InputGroup.Append>
-                                </InputGroup>
+                                                />
+                                            </InputGroup.Text>
+                                        </InputGroup.Append>
+                                    </InputGroup>
+                                    : null}
+                                {this.state.passwordsNotMatchingError ? <div className='error'>Passwords not matching!</div> : null}
                                 <Row className='bottom-btns-container'>
                                     <Col xs={6}>
                                         <Button className='clear-btn' onClick={() => this.clearForm()}>Clear</Button>
@@ -183,6 +284,8 @@ class Profile extends React.Component {
                         </Card>
                     </Col>
                 </Row>
+                {this.state.showSuccessModal ? <ProfileSuccessModal visible={this.state.showSuccessModal} onHide={() => this.hideSuccessModal()} /> : null}
+
             </div>
         )
     }
@@ -193,7 +296,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => {
-    return bindActionCreators({ dispatchGetProfile, dispatchUpdateProfile }, dispatch)
+    return bindActionCreators({ dispatchGetProfile, dispatchUpdateProfile, actionProfileUpdateSuccess }, dispatch)
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))

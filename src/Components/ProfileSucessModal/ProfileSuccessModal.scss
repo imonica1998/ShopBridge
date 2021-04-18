@@ -1,0 +1,32 @@
+@import "../../global.scss";
+.profile-success-modal .modal-content {
+    display: flex;
+    flex-direction: column;
+    .success-modal-title {
+        font-weight: bold;
+        font-size: 28px;
+        color: $blue;
+        text-align: center;
+    }
+    .success-img-container {
+        display: flex;
+        justify-content: center;
+        .success-img {
+            margin-top: 20px;
+        }
+    }
+    .close-btn-container {
+        display: flex;
+        justify-content: flex-end;
+        .close-btn {
+            background: white;
+            color: $darkGrey;
+            border-color: white;
+            outline: none;
+            &:hover{
+                background-color: white ;
+                border-color: white;
+            }
+        }
+    }
+}

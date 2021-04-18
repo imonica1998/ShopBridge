@@ -4,6 +4,7 @@ import Menu from "../../assets/menu.svg";
 import User from "../../assets/user.svg";
 import "./TopNav.scss";
 import { navigationRef } from "../../index";
+import Utility from "../../Utils/Utility";
 class TopNav extends React.Component {
     constructor(props: any) {
         super(props);
@@ -20,7 +21,7 @@ class TopNav extends React.Component {
                         <Image src={Menu} />
                     </Col>
                     <Col xs={8} md={8}>
-                        Welcome Admin,
+                    Welcome {Utility.getCookie("full_name").split(" ")[0]},
                     </Col>
                     <Col xs={2} md={2} className="justify-content-end d-flex align-items-end">
                         <div className="cursor-pointer user-img-container" onClick={() => this.navigateToProfile()}>

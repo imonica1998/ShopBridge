@@ -8,6 +8,7 @@
     top: 0;
     height: 100vh;
     background: rgba(0, 0, 0, 0.3);
+    z-index: 100;
 
     .custom-spinner {
         width: 3rem !important;

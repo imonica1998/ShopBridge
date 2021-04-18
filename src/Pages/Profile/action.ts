@@ -3,6 +3,7 @@ export const SET_PROFILE = 'SET_PROFILE'
 export const ERROR_GET_PROFILE = 'ERROR_GET_PROFILE'
 export const UPDATE_PROFILE = "UPDATE_PROFILE"
 export const ERROR_UPDATE_PROFILE = "ERROR_UPDATE_PROFILE"
+export const PROFILE_UPDATE_SUCCESS = "PROFILE_UPDATE_SUCCESS"
 
 export function actionGetProfile() {
     return { type: GET_PROFILE }
@@ -22,5 +23,9 @@ export function actionUpdateProfile() {
 
 export function actionErrorUpdateProfile(error: any) {
     return { type: ERROR_UPDATE_PROFILE, error }
+}
+
+export function actionProfileUpdateSuccess(success: boolean) {
+    return { type: PROFILE_UPDATE_SUCCESS, success }
 }
 
