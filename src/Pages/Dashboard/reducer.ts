@@ -1,4 +1,4 @@
-import { GET_DASHBOARD_ITEMS, GET_ITEMS_LIST, SET_DASHBOARD_ITEMS, SET_ITEMS_LIST, ERROR_GET_ITEMS_LIST, ERROR_GET_DASHBOARD_ITEMS, DELETE_ITEM, DELETE_ITEM_SUCCESS } from './action';
+import { GET_DASHBOARD_ITEMS, GET_ITEMS_LIST, SET_DASHBOARD_ITEMS, SET_ITEMS_LIST, ERROR_GET_ITEMS_LIST, ERROR_GET_DASHBOARD_ITEMS, DELETE_ITEM, DELETE_ITEM_SUCCESS, CREATE_OR_MODIFY_ITEM_SUCCESS, CREATE_OR_MODIFY_ITEM } from './action';
 
 const devLoginInitialState = {
     dashboardData: {},
@@ -7,6 +7,8 @@ const devLoginInitialState = {
     errorGetItemsList: false,
     deleteItem: "",
     deleteItemSuccess: false,
+    itemCreating: false,
+    createOrModifyItemSuccess: false,
 }
 
 function dashboardReducer(state = devLoginInitialState, action: any) {
@@ -27,6 +29,10 @@ function dashboardReducer(state = devLoginInitialState, action: any) {
             return { ...state, deleteItem: action.itemName }
         case DELETE_ITEM_SUCCESS:
             return { ...state, deleteItemSuccess: action.success }
+        case CREATE_OR_MODIFY_ITEM:
+            return { ...state, itemCreating: action.creating }
+        case CREATE_OR_MODIFY_ITEM_SUCCESS:
+            return { ...state, createOrModifyItemSuccess: action.success, itemCreating: false }
         default:
             return state
     }

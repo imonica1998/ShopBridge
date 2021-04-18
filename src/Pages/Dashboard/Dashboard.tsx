@@ -22,6 +22,9 @@ class Dashboard extends React.Component {
         }
         this.props.dispatchGetInventoryItemsList();
     }
+    navigateToEditScreen() {
+        Utility.navigateToScreen(`/edit-item?item_name=New Item`, this, { editItem: false });
+    }
     render() {
         console.log("dashboard-", this.props)
         return (
@@ -72,7 +75,7 @@ class Dashboard extends React.Component {
                         <Col xs={12} md={4}>
                             <Card className="widget-card">
                                 <Row className="align-items-center">
-                                    <Col xs={2} md={2} className="widget-icon-col">
+                                    <Col xs={2} md={2} className="widget-icon-col cursor-pointer" onClick={()=>this.navigateToEditScreen()}>
                                         <FontAwesome
                                             className="text-green"
                                             name="plus-square"
@@ -142,7 +145,7 @@ class Dashboard extends React.Component {
                         <h2 className="text-blue text-left">Items in the Inventory</h2>
                         <ItemsList items={this.props.dashboard.inventoryItems} />
                     </div>
-                   
+
                 </Container>
             </div>
         )

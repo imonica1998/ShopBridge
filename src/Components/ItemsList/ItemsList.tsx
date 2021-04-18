@@ -41,7 +41,7 @@ class ItemsList extends React.Component {
     navigateToEditItem(itemName: string, item: any) {
         console.log("item--", item)
         this.setState({ actionItemName: itemName }, function () {
-            navigationRef.current.history.push(`/edit-item?item_name=${itemName}`, { item: item })
+            navigationRef.current.history.push(`/edit-item?item_name=${itemName}`, { item: item, editItem: true })
         }
         )
     }
@@ -62,56 +62,58 @@ class ItemsList extends React.Component {
                 outOfStock = true
             }
             let discount = this.props.items[i]['mrp'] - this.props.items[i]["customer_price"];
-            products.push(
-                <Col lg={3} md={4} xs={12} key={this.props.items[i]['name']}>
-                    <Card className='item-card'>
-                        <Row>
-                            <Col xs={5} md={12} lg={12}>
-                                <div className="product">
-                                    {outOfStock ? <p className='sold-out'>Sold out</p> : null}
-                                    <Image className='img-fluid' src={this.props.items[i]["item_image"]} />
-                                </div>
-                            </Col>
-                            <Col xs={7} md={12} lg={12}>
-                                <p className='brand'>{this.props.items[i]['brand'].toUpperCase()}</p>
-                                <h5 className='productName'> {this.props.items[i]['item_name'].split('/')[0]}</h5>
-                                <OverlayTrigger trigger="click" placement="bottom" overlay={this.createPopover(this.props.items[i]['description'])}>
-                                    <div className="cursor-pointer description">Description </div>
-                                </OverlayTrigger>
-                                <label>
-                                    {this.props.items[i]['mrp'] > 0 ? <div>MRP <span className='mrp'>₹ <strike>{this.props.items[i]['mrp']}</strike></span></div> : null}
-                                    <label>Customer Price<span className='customer-price'> ₹ {this.props.items[i]["customer_price"]}</span></label>
-                                </label>
-                                <label>
-                                    {discount > 0 ?
-                                        <div>Total Off <span className='total-off'> ₹ {discount.toFixed(2)}</span></div>
-                                        : null}
-                                </label>
-                                <Row>
-                                    <Col md={6} xs={6} className='center offset-md-0'>
-                                        <Button onClick={(e) => this.navigateToEditItem(this.props.items[i]['name'], this.props.items[i])} disabled={outOfStock} className="edit-button">
-                                            <FontAwesome
-                                                name="edit"
-                                                size="2x"
-                                            />
-                                        </Button>
+            if (this.props.items[i]['status'] !== "Deleted") {
+                products.push(
+                    <Col lg={3} md={4} xs={12} key={this.props.items[i]['name']}>
+                        <Card className='item-card'>
+                            <Row>
+                                <Col xs={5} md={12} lg={12}>
+                                    <div className="product">
+                                        {outOfStock ? <p className='sold-out'>Sold out</p> : null}
+                                        <Image className='img-fluid' src={this.props.items[i]["item_image"]} />
+                                    </div>
+                                </Col>
+                                <Col xs={7} md={12} lg={12}>
+                                    <p className='brand'>{this.props.items[i]['brand'].toUpperCase()}</p>
+                                    <h5 className='productName'> {this.props.items[i]['item_name'].split('/')[0]}</h5>
+                                    <OverlayTrigger trigger="click" placement="bottom" overlay={this.createPopover(this.props.items[i]['description'])}>
+                                        <div className="cursor-pointer description">Description </div>
+                                    </OverlayTrigger>
+                                    <label>
+                                        {this.props.items[i]['mrp'] > 0 ? <div>MRP <span className='mrp'>₹ <strike>{this.props.items[i]['mrp']}</strike></span></div> : null}
+                                        <label>Customer Price<span className='customer-price'> ₹ {this.props.items[i]["customer_price"]}</span></label>
+                                    </label>
+                                    <label>
+                                        {discount > 0 ?
+                                            <div>Total Off <span className='total-off'> ₹ {discount.toFixed(2)}</span></div>
+                                            : null}
+                                    </label>
+                                    <Row>
+                                        <Col md={6} xs={6} className='center offset-md-0'>
+                                            <Button onClick={(e) => this.navigateToEditItem(this.props.items[i]['name'], this.props.items[i])} disabled={outOfStock} className="edit-button">
+                                                <FontAwesome
+                                                    name="edit"
+                                                    size="2x"
+                                                />
+                                            </Button>
 
-                                    </Col>
-                                    <Col md={6} xs={6} className='center offset-md-0'>
-                                        <Button onClick={(e) => this.toogleModal(true, this.props.items[i]['name'])} disabled={outOfStock} className="delete-button">
-                                            <FontAwesome
-                                                name="trash"
-                                                size="2x"
-                                            />
-                                        </Button>
+                                        </Col>
+                                        <Col md={6} xs={6} className='center offset-md-0'>
+                                            <Button onClick={(e) => this.toogleModal(true, this.props.items[i]['name'])} disabled={outOfStock} className="delete-button">
+                                                <FontAwesome
+                                                    name="trash"
+                                                    size="2x"
+                                                />
+                                            </Button>
 
-                                    </Col>
-                                </Row>
-                            </Col>
-                        </Row>
-                    </Card>
-                </Col>
-            )
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
+                )
+            }
         }
         return (
 

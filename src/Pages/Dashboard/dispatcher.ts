@@ -1,4 +1,4 @@
-import { actionErrorGetDashboardItems, actionErrorGetItemsList, actionGetDashboardItems, actionGetItemsList, actionSetDasboardItems, actionSetItemsList, actionDeleteItem, actionDeleteItemSuccess } from './action';
+import { actionErrorGetDashboardItems, actionErrorGetItemsList, actionGetDashboardItems, actionGetItemsList, actionSetDasboardItems, actionSetItemsList, actionDeleteItem, actionDeleteItemSuccess, actionCreateOrModifyItem, actionCreateOrModifyItemSuccess } from './action';
 import { apiCall } from "../../Utils/API/ApiCall";
 import { apiEndPoints, requestMethod } from "../../Utils/API/Constants";
 import { toast } from 'react-toastify';
@@ -8,7 +8,6 @@ export function dispatchGetInventoryItemsList() {
         dispatch(actionGetItemsList());
         let response = await apiCall(apiEndPoints.GET_INVENTORY_ITEMS_DASHBOARD, requestMethod.GET)
         if (response.success) {
-            console.log("response---", response)
             dispatch(actionSetItemsList(response?.data?.message))
         }
         else {
@@ -32,7 +31,6 @@ export function dispatchGetDashboardItems() {
 
 export function dispatchDeleteItem(itemName: string) {
     return async (dispatch: any) => {
-        console.log("inside dispatch")
         if (!itemName) {
             toast.error("Invalid Item Name!");
             return
@@ -40,12 +38,26 @@ export function dispatchDeleteItem(itemName: string) {
         dispatch(actionDeleteItem(itemName))
         let response = await apiCall(apiEndPoints.DELETE_ITEM + `?item_name=${itemName}`, requestMethod.GET)
         if (response.success) {
-            console.log("response delete---", response)
             dispatch(actionDeleteItem(""))
             dispatch(actionDeleteItemSuccess(true))
         }
         else {
             dispatch(actionDeleteItemSuccess(!response.success))
+        }
+    }
+}
+
+export function dispatchCreateOrModifyItem(item: any, isNew: boolean) {
+    return async (dispatch: any) => {
+        console.log("createOrmodify-", item)
+        dispatch(actionCreateOrModifyItem(true))
+        let response = await apiCall(apiEndPoints.CREATE_MODIFY_ITEM, requestMethod.POST, { "payload": JSON.stringify(item), "is_new": isNew })
+        console.log("response--",response)
+        if (response.success && response.data?.message) {
+            dispatch(actionCreateOrModifyItemSuccess(true))
+        }
+        else {
+            dispatch(actionCreateOrModifyItemSuccess(!response.success))
         }
     }
 }

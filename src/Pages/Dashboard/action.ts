@@ -6,6 +6,8 @@ export const SET_DASHBOARD_ITEMS = 'SET_DASHBOARD_ITEMS'
 export const ERROR_GET_DASHBOARD_ITEMS = 'ERROR_GET_DASHBOARD_ITEMS'
 export const DELETE_ITEM = 'DELETE_ITEM'
 export const DELETE_ITEM_SUCCESS = 'DELETE_ITEM_SUCCESS'
+export const CREATE_OR_MODIFY_ITEM = 'CREATE_OR_MODIFY_ITEM'
+export const CREATE_OR_MODIFY_ITEM_SUCCESS = 'CREATE_OR_MODIFY_ITEM_SUCCESS'
 
 export function actionGetItemsList() {
     return { type: GET_ITEMS_LIST }
@@ -39,4 +41,10 @@ export function actionDeleteItemSuccess(success: boolean) {
     return { type: DELETE_ITEM_SUCCESS, success }
 }
 
+export function actionCreateOrModifyItem(creating:boolean) {
+    return { type: CREATE_OR_MODIFY_ITEM ,creating}
+}
+export function actionCreateOrModifyItemSuccess(success: boolean) {
+    return { type: CREATE_OR_MODIFY_ITEM_SUCCESS, success }
+}
 

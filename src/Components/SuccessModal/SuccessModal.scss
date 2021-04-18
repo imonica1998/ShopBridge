@@ -2,6 +2,7 @@
 .success-modal .modal-content {
     display: flex;
     flex-direction: column;
+    border-radius: 15px;
     .success-modal-title {
         font-weight: bold;
         font-size: 28px;
@@ -11,6 +12,7 @@
     .success-img-container {
         display: flex;
         justify-content: center;
+        margin-bottom: 20px;
         .success-img {
             margin-top: 20px;
         }
